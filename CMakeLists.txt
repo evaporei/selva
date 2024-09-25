@@ -14,14 +14,16 @@ set(MY_FLAGS "-std=c11" "-Wall")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_library(selva STATIC src/core.c)
+add_library(selva STATIC src/core.c src/arena.c)
 
 target_include_directories(selva PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 enable_testing()
 
 add_executable(core_test tests/core_test.c)
-
 target_link_libraries(core_test PRIVATE selva)
-
 add_test(NAME CoreTest COMMAND core_test)
+
+add_executable(arena_test tests/arena_test.c)
+target_link_libraries(arena_test PRIVATE selva)
+add_test(NAME ArenaTest COMMAND arena_test)
