@@ -6,9 +6,9 @@
 
 int main() {
     Arena arena;
-    arena_init(&arena, sizeof(u8) * 50);
+    arena_init(&arena, sizeof(u8) * 64);
     assert(arena.offset == 0);
-    assert(arena.capacity == sizeof(u8) * 50);
+    assert(arena.capacity == sizeof(u8) * 64);
 
     u8 *list = (u8 *) arena_alloc(&arena, sizeof(u8) * 5);
     assert(list);
@@ -25,28 +25,27 @@ int main() {
 
     char *str = (char *) arena_alloc(&arena, sizeof(char) * 6);
     assert(str);
-    assert(arena.buffer + sizeof(u8) * 5 == (u8 *) str);
-    assert(arena.offset == sizeof(u8) * 5 + sizeof(char) * 6);
+    assert(arena.buffer + sizeof(u8) * 8 == (u8 *) str);
+    assert(arena.offset == sizeof(u8) * 8 + sizeof(char) * 6);
 
     strcpy(str, "hello");
 
     printf("%s\n", str);
 
     arena_dealloc(&arena, sizeof(char) * 6);
-    assert(arena.buffer + sizeof(u8) * 5 == (u8 *) str);
-    assert(arena.offset == sizeof(u8) * 5);
+    assert(arena.buffer + sizeof(u8) * 8 == (u8 *) str);
+    assert(arena.offset == sizeof(u8) * 8);
 
     str = (char *) arena_alloc(&arena, sizeof(char) * 6);
     assert(str);
-    assert(arena.buffer + sizeof(u8) * 5 == (u8 *) str);
-    assert(arena.offset == sizeof(u8) * 5 + sizeof(char) * 6);
+    assert(arena.buffer + sizeof(u8) * 8 == (u8 *) str);
+    assert(arena.offset == sizeof(u8) * 8 + sizeof(char) * 6);
 
     strcpy(str, "banana");
 
     printf("%s\n", str);
 
     arena_reset(&arena);
-    assert(arena.buffer + sizeof(u8) * 5 == (u8 *) str);
     assert(arena.offset == 0);
 
     list = (u8 *) arena_alloc(&arena, sizeof(u8) * 10);
