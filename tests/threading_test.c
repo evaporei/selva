@@ -4,7 +4,11 @@
 #include <assert.h>
 #include <stdio.h>
 
+#ifdef WIN32
+DWORD WINAPI thread_function(LPVOID arg) {
+#else
 void *thread_fn(void *arg) {
+#endif
     u32 *n = (u32 *) arg;
     assert(*n == 42);
     printf("arg: %d\n", *n);

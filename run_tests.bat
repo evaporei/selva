@@ -1,6 +1,2 @@
-#!/usr/bin/env bash
-
-set -e
-
-./build.sh
+.\build.bat
 ctest --test-dir build --verbose -C Debug

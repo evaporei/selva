@@ -2,14 +2,16 @@
 
 #include <assert.h>
 
-void thread_init(Thread *thread, void * (*fn) (void *), void *arg) {
 #ifdef WIN32
-    thread->handle = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE) fn, &arg, 0, &thread->id);
+void thread_init(Thread *thread, LPTHREAD_START_ROUTINE fn, void *arg) {
+    thread->handle = CreateThread(NULL, 0, fn, arg, 0, &thread->id);
     assert(thread->handle);
-#else
-    assert(pthread_create(&thread->handle, NULL, fn, arg) == 0);
-#endif
 }
+#else
+void thread_init(Thread *thread, void * (*fn) (void *), void *arg) {
+    assert(pthread_create(&thread->handle, NULL, fn, arg) == 0);
+}
+#endif
 
 void thread_join(Thread *thread) {
 #ifdef WIN32
