@@ -1,5 +1,5 @@
-#include "primitives.h"
-#include "threading.h"
+#include "selva/primitives.h"
+#include "selva/threading.h"
 
 #include <assert.h>
 #include <stdio.h>

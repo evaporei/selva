@@ -2,7 +2,7 @@
 #include <assert.h>
 #include <string.h>
 
-#include "arena.h"
+#include "selva/arena.h"
 
 int main() {
     Arena arena;
