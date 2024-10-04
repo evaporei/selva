@@ -14,7 +14,10 @@ set(MY_FLAGS "-std=c11" "-Wall")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_library(selva STATIC src/arena.c src/threading.c)
+add_library(selva STATIC
+    src/arena.c
+    src/threading.c
+)
 
 target_include_directories(selva PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
@@ -27,3 +30,7 @@ add_test(NAME ArenaTest COMMAND arena_test)
 add_executable(threading_test tests/threading_test.c)
 target_link_libraries(threading_test PRIVATE selva)
 add_test(NAME ThreadingTest COMMAND threading_test)
+
+add_executable(fat_ptr_test tests/fat_ptr_test.c)
+target_link_libraries(fat_ptr_test PRIVATE selva)
+add_test(NAME FatPtrTest COMMAND fat_ptr_test)
