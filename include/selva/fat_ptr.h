@@ -10,4 +10,4 @@
     }
                                                
 #define fat_ptr_push(ptr, item) \
-    ptr->data[ptr->len++] = item;
+    ptr->data[ptr->len++] = item
