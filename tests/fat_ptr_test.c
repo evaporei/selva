@@ -9,6 +9,11 @@ int main() {
     fat_ptr_push((&ptr), 1);
     fat_ptr_push((&ptr), 2);
     fat_ptr_push((&ptr), 3);
+    fat_ptr_push((&ptr), 4);
+    fat_ptr_push((&ptr), 5);
+    /* fat_ptr_push((&ptr), 6); */
+    /* printf("len %llu\n", ptr.len); */
+    /* printf("sizes %lu\n", sizeof(ptr.data) / sizeof(ptr.data[0])); */
 
     assert(ptr.data[0] == 1);
     assert(ptr.data[1] == 2);
