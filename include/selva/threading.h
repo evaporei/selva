@@ -15,9 +15,10 @@ typedef struct Thread {
 #endif
 } Thread;
 
-#ifdef WIN32
-void thread_init(Thread *thread, LPTHREAD_START_ROUTINE fn, void *arg);
-#else
-void thread_init(Thread *thread, void * (*fn) (void *), void *arg);
-#endif
+typedef struct ThreadData {
+    void (*fn) (void *);
+    void *arg;
+} ThreadData;
+
+void thread_init(Thread *thread, void (*fn) (void *), void *arg);
 void thread_join(Thread *thread);

@@ -4,19 +4,10 @@
 #include <assert.h>
 #include <stdio.h>
 
-#ifdef WIN32
-DWORD WINAPI thread_fn(LPVOID arg) {
-#else
-void *thread_fn(void *arg) {
-#endif
+void thread_fn(void *arg) {
     u32 *n = (u32 *) arg;
     assert(*n == 42);
     printf("arg: %d\n", *n);
-#ifdef WIN32
-    return 0;
-#else
-    return NULL;
-#endif
 }
 
 int main() {
