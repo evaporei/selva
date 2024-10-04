@@ -11,7 +11,7 @@ int main() {
     u8FixBuf buf = {0};
 
     for (u8 n = 1; n <= MAX_SIZE; n++) {
-        fix_buf_push((&buf), &n);
+        fix_buf_push((&buf), u8, &n);
     }
 
     /* fat_buf_push((&buf), 6); */

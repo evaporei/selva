@@ -14,10 +14,10 @@
     } type##FixBuf
                                                
 #ifdef DEBUG
-#define fix_buf_push(buf, item)                                   \
-    assert(buf->len <= sizeof(buf->data) / sizeof(buf->data[0])); \
-    memcpy(buf->data + buf->len++, item, sizeof(buf->data[0]))
+#define fix_buf_push(buf, type, item)                                   \
+    assert(buf->len <= sizeof(buf->data) / sizeof(type)); \
+    memcpy(buf->data + buf->len++, item, sizeof(type))
 #else
-#define fix_buf_push(buf, item) \
-    memcpy(buf->data + buf->len++, item, sizeof(buf->data[0]))
+#define fix_buf_push(buf, type, item) \
+    memcpy(buf->data + buf->len++, item, sizeof(type))
 #endif
