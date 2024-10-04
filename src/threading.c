@@ -40,3 +40,12 @@ void thread_join(Thread *thread) {
     assert(pthread_join(thread->handle, NULL) == 0);
 #endif
 }
+
+void thread_detach(Thread *thread) {
+#ifdef WIN32
+    WaitForSingleObject(thread->handle, 0);
+    CloseHandle(thread->handle);
+#else
+    assert(pthread_detach(thread->handle) == 0);
+#endif
+}

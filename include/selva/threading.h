@@ -22,3 +22,4 @@ typedef struct ThreadData {
 
 void thread_init(Thread *thread, void (*fn) (void *), void *arg);
 void thread_join(Thread *thread);
+void thread_detach(Thread *thread);
