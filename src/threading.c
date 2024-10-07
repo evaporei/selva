@@ -1,4 +1,5 @@
 #include "selva/threading.h"
+#include "selva/primitives.h"
 
 #include <assert.h>
 #include <stdlib.h>
@@ -28,7 +29,8 @@ void thread_init(Thread *thread, void (*fn) (void *), void *arg) {
     assert(thread->handle);
 }
 #else
-    assert(pthread_create(&thread->handle, NULL, wrapper_fn, data) == 0);
+    i32 result = pthread_create(&thread->handle, NULL, wrapper_fn, data);
+    assert(result == 0);
 }
 #endif
 
@@ -37,7 +39,8 @@ void thread_join(Thread *thread) {
     WaitForSingleObject(thread->handle, INFINITE);
     CloseHandle(thread->handle);
 #else
-    assert(pthread_join(thread->handle, NULL) == 0);
+    i32 result = pthread_join(thread->handle, NULL);
+    assert(result == 0);
 #endif
 }
 
@@ -46,6 +49,7 @@ void thread_detach(Thread *thread) {
     WaitForSingleObject(thread->handle, 0);
     CloseHandle(thread->handle);
 #else
-    assert(pthread_detach(thread->handle) == 0);
+    i32 result = pthread_detach(thread->handle);
+    assert(result == 0);
 #endif
 }
