@@ -6,18 +6,37 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-// TODO: parameterize
-#define QUEUE_MAX 5
+// mayybe parameterize
+// though there's wrap around
+#define QUEUE_MAX 16
 
-typedef struct LockFreeQueue {
-    // TODO: parameterize
-    i32 buffer[QUEUE_MAX];
-    _Atomic size_t head;
-    _Atomic size_t tail;
-} LockFreeQueue;
+#define LockFreeQueue(type) \
+    typedef struct type##LockFreeQueue { \
+        type buffer[QUEUE_MAX]; \
+        _Atomic size_t head; \
+        _Atomic size_t tail; \
+    } type##LockFreeQueue;
 
-void lock_free_queue_init(LockFreeQueue *queue);
+#define lock_free_queue_init(queue) \
+    atomic_init(&queue->head, 0); \
+    atomic_init(&queue->tail, 0)
 
-void lock_free_queue_enqueue(LockFreeQueue *queue, i32 *data);
+#define lock_free_queue_enqueue(queue, data) \
+({ \
+    size_t tail = atomic_load(&(queue)->tail); \
+    (queue)->buffer[tail % QUEUE_MAX] = *data; \
+    atomic_store(&(queue)->tail, tail + 1); \
+})
 
-bool lock_free_queue_dequeue(LockFreeQueue *queue, i32 *data);
+#define lock_free_queue_dequeue(queue, data) \
+    ({ \
+        bool retval = false; \
+        size_t head = atomic_load(&(queue)->head); \
+        size_t tail = atomic_load(&(queue)->tail); \
+        if (head != tail) { \
+            *(data) = (queue)->buffer[head % QUEUE_MAX]; \
+            atomic_store(&(queue)->head, head + 1); \
+            retval = true; \
+        } \
+        retval; \
+    })

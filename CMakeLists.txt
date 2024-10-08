@@ -17,7 +17,6 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_library(selva STATIC
     src/arena.c
     src/threading.c
-    src/lock_free_queue.c
 )
 
 target_include_directories(selva PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)

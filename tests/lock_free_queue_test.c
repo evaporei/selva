@@ -2,11 +2,13 @@
 
 #include <stdio.h>
 
+LockFreeQueue(i32);
+
 // needs to be global (data segment)
 // or in the heap
 //
 // stack is not shared between threads
-LockFreeQueue queue = {0};
+i32LockFreeQueue queue = {0};
 
 void main_thread() {
     usize count = 0;
@@ -26,7 +28,7 @@ void secondary_thread() {
 }
 
 int main() {
-    lock_free_queue_init(&queue);
+    lock_free_queue_init((&queue));
 
     Thread thread;
     thread_init(&thread, secondary_thread, NULL);
