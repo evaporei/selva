@@ -2,9 +2,16 @@
 
 #include "primitives.h"
 
-#include <stdatomic.h>
 #include <stddef.h>
 #include <stdbool.h>
+
+#ifdef __cplusplus
+#include <atomic>
+#define ATOMIC_VAR(type) std::atomic<type>
+#else
+#include <stdatomic.h>
+#define ATOMIC_VAR(type) _Atomic type
+#endif
 
 // mayybe parameterize
 // though there's wrap around
@@ -13,8 +20,8 @@
 #define LockFreeQueue(type) \
     typedef struct type##LockFreeQueue { \
         type buffer[QUEUE_MAX]; \
-        _Atomic size_t head; \
-        _Atomic size_t tail; \
+        ATOMIC_VAR(size_t) head; \
+        ATOMIC_VAR(size_t) tail; \
     } type##LockFreeQueue;
 
 #define lock_free_queue_init(queue) \
