@@ -12,5 +12,5 @@
     } type##FixBuf
                                                
 #define fix_buf_push(buf, type, item)                                   \
-    assert(buf->len <= sizeof(buf->data) / sizeof(type)); \
-    memcpy(buf->data + buf->len++, item, sizeof(type))
+    assert((buf)->len <= sizeof((buf)->data) / sizeof(type)); \
+    memcpy((buf)->data + (buf)->len++, item, sizeof(type))

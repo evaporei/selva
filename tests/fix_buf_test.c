@@ -11,10 +11,10 @@ int main() {
     u8FixBuf buf = {0};
 
     for (u8 n = 1; n <= MAX_SIZE; n++) {
-        fix_buf_push((&buf), u8, &n);
+        fix_buf_push(&buf, u8, &n);
     }
 
-    /* fat_buf_push((&buf), 6); */
+    /* fat_buf_push(&buf, 6); */
     /* printf("len %llu\n", buf.len); */
     /* printf("sizes %lu\n", sizeof(buf.data) / sizeof(buf.data[0])); */
 
