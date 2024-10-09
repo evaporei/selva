@@ -12,6 +12,9 @@
 #define atomic_load(var) (*(var))
 #define atomic_store(var, val) (*(var) = (val))
 #define atomic_fetch_add(var, val) InterlockedExchangeAdd((LONG volatile *)(var), (val))
+#elif defined(__APPLE__) && defined(__cplusplus)
+#include <atomic>
+#define ATOMIC_VAR(type) std::atomic<type>
 #else
 #include <stdatomic.h>
 #define ATOMIC_VAR(type) _Atomic type
