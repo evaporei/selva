@@ -25,8 +25,8 @@
     } type##LockFreeQueue;
 
 #define lock_free_queue_init(queue) \
-    atomic_init(&queue->head, 0); \
-    atomic_init(&queue->tail, 0)
+    atomic_init(&(queue)->head, 0); \
+    atomic_init(&(queue)->tail, 0)
 
 #define lock_free_queue_enqueue(queue, data) \
 ({ \

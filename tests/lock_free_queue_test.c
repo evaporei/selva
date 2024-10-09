@@ -28,7 +28,7 @@ void secondary_thread() {
 }
 
 int main() {
-    lock_free_queue_init((&queue));
+    lock_free_queue_init(&queue);
 
     Thread thread;
     thread_init(&thread, secondary_thread, NULL);
