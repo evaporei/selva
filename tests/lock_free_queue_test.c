@@ -13,8 +13,10 @@ i32LockFreeQueue queue = {0};
 void main_thread() {
     usize count = 0;
     i32 element;
+    bool has_new = false;
     while (count < QUEUE_MAX) {
-        if (lock_free_queue_dequeue(&queue, &element)) {
+        lock_free_queue_dequeue(&queue, &has_new, &element);
+        if (has_new) {
             printf("main:element %d\n", element);
             count += 1;
         }
