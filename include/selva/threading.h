@@ -8,8 +8,10 @@
 
 typedef struct Thread {
 #ifdef WIN32
-    HANDLE handle;
+    // order relevant because of padding
+    // https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-4-c4820?view=msvc-170
     DWORD id;
+    HANDLE handle;
 #else
     pthread_t handle;
 #endif

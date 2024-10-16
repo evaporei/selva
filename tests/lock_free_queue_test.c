@@ -23,7 +23,7 @@ void main_thread() {
     }
 }
 
-void secondary_thread() {
+void secondary_thread(void *_unused) {
     for (i32 n = 1; n <= QUEUE_MAX; n++) {
         lock_free_queue_enqueue(&queue, &n);
     }
