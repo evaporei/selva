@@ -1,13 +1,13 @@
 #pragma once
 
-#ifdef WIN32
+#ifdef _WIN32
 #include <windows.h>
 #else
 #include <pthread.h>
 #endif
 
 typedef struct Thread {
-#ifdef WIN32
+#ifdef _WIN32
     // order relevant because of padding
     // https://learn.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-4-c4820?view=msvc-170
     DWORD id;

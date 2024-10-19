@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#ifdef WIN32
+#ifdef _WIN32
 DWORD WINAPI wrapper_fn(LPVOID arg) {
     ThreadData *data = (ThreadData *) arg;
     data->fn(data->arg);
@@ -24,7 +24,7 @@ void thread_init(Thread *thread, void (*fn) (void *), void *arg) {
     ThreadData *data = (ThreadData *) malloc(sizeof(ThreadData));
     data->fn = fn;
     data->arg = arg;
-#ifdef WIN32
+#ifdef _WIN32
     thread->handle = CreateThread(NULL, 0, wrapper_fn, data, 0, &thread->id);
     assert(thread->handle);
 }
@@ -35,7 +35,7 @@ void thread_init(Thread *thread, void (*fn) (void *), void *arg) {
 #endif
 
 void thread_join(Thread *thread) {
-#ifdef WIN32
+#ifdef _WIN32
     WaitForSingleObject(thread->handle, INFINITE);
     CloseHandle(thread->handle);
 #else
@@ -45,7 +45,7 @@ void thread_join(Thread *thread) {
 }
 
 void thread_detach(Thread *thread) {
-#ifdef WIN32
+#ifdef _WIN32
     WaitForSingleObject(thread->handle, 0);
     CloseHandle(thread->handle);
 #else
