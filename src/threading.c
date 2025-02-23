@@ -8,14 +8,12 @@
 DWORD WINAPI wrapper_fn(LPVOID arg) {
     ThreadData *data = (ThreadData *) arg;
     data->fn(data->arg);
-    free(data);
     return 0;
 }
 #else
 void *wrapper_fn(void *arg) {
     ThreadData *data = (ThreadData *) arg;
     data->fn(data->arg);
-    free(data);
     return NULL;
 }
 #endif
@@ -31,8 +29,9 @@ void thread_init(Thread *thread, void (*fn) (void *), void *arg) {
 #else
     i32 result = pthread_create(&thread->handle, NULL, wrapper_fn, data);
     assert(result == 0);
-}
 #endif
+    thread->data = data;
+}
 
 void thread_join(Thread *thread) {
 #ifdef _WIN32
@@ -42,6 +41,7 @@ void thread_join(Thread *thread) {
     i32 result = pthread_join(thread->handle, NULL);
     assert(result == 0);
 #endif
+    free(thread->data);
 }
 
 void thread_detach(Thread *thread) {

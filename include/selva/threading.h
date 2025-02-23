@@ -6,6 +6,11 @@
 #include <pthread.h>
 #endif
 
+typedef struct ThreadData {
+    void (*fn) (void *);
+    void *arg;
+} ThreadData;
+
 typedef struct Thread {
 #ifdef _WIN32
     // order relevant because of padding
@@ -15,12 +20,8 @@ typedef struct Thread {
 #else
     pthread_t handle;
 #endif
+    ThreadData *data;
 } Thread;
-
-typedef struct ThreadData {
-    void (*fn) (void *);
-    void *arg;
-} ThreadData;
 
 void thread_init(Thread *thread, void (*fn) (void *), void *arg);
 void thread_join(Thread *thread);

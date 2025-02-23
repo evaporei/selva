@@ -8,8 +8,8 @@
 void thread_fn(void *arg) {
     u32 *n = (u32 *) arg;
     assert(*n == 42);
+    *n = 50;
     printf("arg: %d\n", *n);
-    free(arg);
 }
 
 int main() {
@@ -21,8 +21,9 @@ int main() {
     *arg = 42;
     thread_init(&thread, &thread_fn, arg);
     printf("before join\n");
-    // // both work
-    /* thread_join(&thread); */
-    thread_detach(&thread);
+    thread_join(&thread);
+    /* thread_detach(&thread); */
     printf("after join\n");
+    assert(*arg == 50);
+    free(arg);
 }
